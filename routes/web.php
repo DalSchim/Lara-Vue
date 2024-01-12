@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiControlleur;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PlaylisteControlleur;
 use Illuminate\Foundation\Application;
@@ -27,6 +28,8 @@ Route::middleware([
     'verified'])->group(function () {
 
     Route::resource('playlists', PlaylisteControlleur::class);
+
+    Route::resource('apiKeys', ApiControlleur::class);
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/tracks/create', [TrackController::class, 'create'])->name('tracks.create');

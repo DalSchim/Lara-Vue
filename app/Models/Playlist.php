@@ -12,7 +12,7 @@ class Playlist extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
+        'name',
         'user_id',
         'uuid',
     ];

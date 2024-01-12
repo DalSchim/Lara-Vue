@@ -22,9 +22,6 @@ class PlaylisteControlleur extends Controller
 
         return inertia::render( 'Playliste/index',[
             'playlists' => $playlists,]);
-
-
-
     }
 
     /**
