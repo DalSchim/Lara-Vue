@@ -22,13 +22,6 @@ class TrackController extends Controller
         return Inertia::render('Track/Create');
     }
 
-    public function delete($uuid)
-    {
-        $track = Track::where('uuid', $uuid)->firstOrFail();
-        $track->delete();
-        return redirect()->route('tracks.index');
-    }
-
     public function edit(track $track)
     {
         return Inertia::render('Track/Edit', [
@@ -36,11 +29,27 @@ class TrackController extends Controller
         ]);
     }
 
-
-    public function destroy($uuid)
+    public function destroy(Track $track)
     {
-        $track = Track::where('uuid', $uuid)->firstOrFail();
         $track->delete();
+        return redirect()->route('tracks.index');
+    }
+
+    public function update(Request $request, Track $track)
+    {
+        $request->validate([
+            'title' => ['string', 'required','max:255'],
+
+            'artist' => ['string', 'required','max:255'],
+
+            'display' => ['required', 'boolean'],
+        ]);
+
+        $track->title = $request->title;
+        $track->artist = $request->artist;
+        $track->display = $request->display;
+        $track->save();
+
         return redirect()->route('tracks.index');
     }
 
@@ -75,6 +84,8 @@ class TrackController extends Controller
             'music' => $musicPath,
             'display' => $request->display,
         ]);
+
+
 
         return redirect()->route('tracks.index');
     }

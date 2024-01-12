@@ -17,4 +17,15 @@ class Track extends Model
         'display',
         'play-count',
     ];
+
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
+    }
+
+    public function playlists(): BelongsToMany
+    {
+        return $this->belongsToMany(Playlist::class)->withTimestamps();
+    }
+
 }

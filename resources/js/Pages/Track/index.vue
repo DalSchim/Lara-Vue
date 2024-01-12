@@ -7,6 +7,7 @@
 
         <template #action>
             <Link
+                v-if="$page.props.isAdmin"
                 :href="route('tracks.create')">
                 Créer une Musique
             </Link>
@@ -21,18 +22,7 @@
                 </ul>
             </div>
             <div class="player">
-                <bouton>
-                    <icon class="icon" icon="bi:skip-start-fill"/>
-                </bouton>
-                <bouton v-model="playbuton" >
-                    <icon class="icon" icon="bi:play-fill"/>
-                </bouton>
-                <bouton v-model="pause">
-                    <icon class="icon" icon="bi:pause-fill"/>
-                </bouton>
-                <bouton>
-                    <icon class="icon" icon="bi:skip-end-fill"/>
-                </bouton>
+
             </div>
         </template>
 
@@ -76,16 +66,14 @@ export default {
     },
     methods: {
         play(track) {
-            const url = '/storage/' + track.music
-            if(!this.curentTrack || this.curentTrack != track.uuid){
-                this.curentTrack = track.uuid
-                this.audio = new Audio(url)
-                this.audio.play()
-            }else{
-                this.audio.play()
-
+            if (this.audio) {
+                this.audio.pause()
             }
+            this.audio = new Audio('/storage/' + track.file)
+            this.audio.play()
+            this.curentTrack = track.uuid
         },
+
         pause() {
             this.audio.pause()
         }

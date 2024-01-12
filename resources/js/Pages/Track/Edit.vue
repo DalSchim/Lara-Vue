@@ -3,7 +3,7 @@
     <MusicLayout>
         <template #title>
             Créer une musique
-            modifier une music {{$track.title}}
+            modifier une music {{track.title}}
         </template>
 
         <template #action>
@@ -32,24 +32,6 @@
                     :class="{ 'border-red-500': form.errors.artist}"
                     type="text"
                     placeholder="Artist"
-                >
-                <label for="">Image</label>
-                <input
-                    @input="form.image = $event.target.files[0]"
-                    id="image"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    :class="{ 'border-red-500': form.errors.image}"
-                    type="file"
-                    placeholder="Image"
-                >
-                <label for="">Musique</label>
-                <input
-                    @input="form.music = $event.target.files[0]"
-                    id="music"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    :class="{ 'border-red-500': form.errors.music}"
-                    type="file"
-                    placeholder="Music"
                 >
                 <label for="">display</label>
                 <br>
@@ -97,8 +79,6 @@
                 </template>
                 {{ form }}
             </form>
-
-
         </template>
     </MusicLayout>
 </template>
@@ -112,23 +92,21 @@ export default {
         MusicLayout,
     },
     props: {
-        tracks: Object,
+        track: Object,
     },
     data() {
         return {
             //test: '',
             form: this.$inertia.form({
-                title: '',
-                artist: '',
-                image: null,
-                music: null,
-                display: true,
-            })
+                title: this.track.title,
+                artist: this.track.artist,
+                display: this.track.display ? true : false,
+            }),
         }
     },
     methods: {
         submit() {
-            this.form.post(route('tracks.store'))
+            this.form.put(route('tracks.update', {track: this.track}))
         }
     }
 }

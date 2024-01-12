@@ -73,12 +73,6 @@
                 <template v-if="form.errors.artist">
                     <p class="text-red-500 text-xs italic">{{ form.errors.artist }}</p>
                 </template>
-                <template v-if="form.errors.image">
-                    <p class="text-red-500 text-xs italic">{{ form.errors.image }}</p>
-                </template>
-                <template v-if="form.errors.music">
-                    <p class="text-red-500 text-xs italic">{{ form.errors.music }}</p>
-                </template>
                 <template v-if="form.recentlySuccessful">
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
                          role="alert">

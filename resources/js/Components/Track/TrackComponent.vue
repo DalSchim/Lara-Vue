@@ -1,4 +1,8 @@
 <script>
+import {Link} from '@inertiajs/vue3'
+import {Icon} from "@iconify/vue";
+
+
 export default {
     name: "TrackComponent",
     emits: ['played'],
@@ -7,13 +11,20 @@ export default {
         active: {
             type: Boolean,
             default: false,
-        }
+        },
     },
     methods: {
+        router() {
+            return router
+        },
         player() {
             this.$emit('played', this.track)
         }
-    }
+    },
+    components: {
+        Icon,
+        Link,
+    },
 
 
 }
@@ -32,6 +43,18 @@ export default {
                 <p>
                     {{ track.artist }}
                 </p>
+                <div class="tool-bouton">
+                    <button class="edit">
+                        <Link :href="route('tracks.edit',{track:track})">
+                            <icon class="icon w-8 h-8 " icon="bi:pencil-square"/>
+                        </Link>
+                    </button>
+                    <bouton class="suprimer" v-if="$page.props.isAdmin">
+                        <Link :href="route('tracks.destroy',{track:track})" as="button" method="delete">
+                            <icon class="icon w-8 h-8" icon="bi:trash-fill"/>
+                        </Link>
+                    </bouton>
+                </div>
             </div>
         </div>
     </li>
@@ -71,5 +94,35 @@ export default {
     font-size: 1.2rem;
     color: #777;
 }
+
+.music-card .edit {
+    background-color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.music-card .edit:hover {
+    color: #8cc0eb;
+}
+
+.music-card .suprimer {
+    background-color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.music-card .suprimer:hover {
+    color: #8cc0eb;
+}
+
+.tool-bouton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem;
+}
+
 
 </style>
